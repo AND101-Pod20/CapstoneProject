@@ -15,14 +15,12 @@ This app will display images, given a prompt, and will fetch images from Unsplas
 
 ### App Evaluation
 
-<!-- Evaluation of your app across the following attributes -->
-
-- **Category:**
-- **Mobile:**
-- **Story:**
-- **Market:**
-- **Habit:**
-- **Scope:**
+- **Category:** Photography
+- **Mobile:** Optimized for mobile but can also work on web
+- **Story:** User can look through different photo options from Unsplash, based on a search prompt, and can download any desired photos
+- **Market:** Any photography enthusiasts or content creators seeking high quality stock images
+- **Habit:** Not much of a focus as interaction is at the discretion of the user
+- **Scope:** V1 achieves its intended purpose. V2 allows for more interaction with the photos. V3 can allow users to sign in and post their photos to Unsplash.
 
 ## Product Spec
 
