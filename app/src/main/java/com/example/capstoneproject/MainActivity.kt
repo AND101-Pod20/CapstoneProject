@@ -38,12 +38,12 @@ class MainActivity : AppCompatActivity() {
         photos = arrayListOf()
 
         setupLayout()
-        setupRecyclerView()
         getData()
         fetchButton = findViewById(R.id.button)
         fetchButton.setOnClickListener{
             getCustomData(promptTextField.editText?.text.toString())
         }
+        setupRecyclerView()
     }
 
 
@@ -108,6 +108,10 @@ class MainActivity : AppCompatActivity() {
             override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
                 val customJson = json.jsonObject.getJSONArray("results")
 
+                if (photos.isNotEmpty()) {
+                    photos.clear()
+                }
+
 
 //                Log.d("DOG", "response$customJson")
                 for(i in 0..<customJson.length()-1){
@@ -123,7 +127,7 @@ class MainActivity : AppCompatActivity() {
                     )
 
                     photos.add(customPhoto)
-
+                    this@MainActivity.adapter.notifyDataSetChanged()
 
 //                    Log.d("DOG", "response successful$customPhoto")
 //                        photoList.add(photo)

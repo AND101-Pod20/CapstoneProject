@@ -7,8 +7,8 @@ data class PhotoData(var id: String,
                      var htmlLink: String,
                      var downloadLink: String) {
 
-    lateinit var photoId: String
-    lateinit var imageUrl: String
-    lateinit var photoDescription: String
-    lateinit var author: String
+//    lateinit var photoId: String
+//    lateinit var imageUrl: String
+//    lateinit var photoDescription: String
+//    lateinit var author: String
 }

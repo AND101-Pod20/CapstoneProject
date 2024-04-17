@@ -40,7 +40,7 @@ class PhotosAdapter(private val mPhotos: List<PhotoData>): RecyclerView.Adapter<
         val fetchButton = holder.fetchButton
 
         // TODO - Bind the widget's data to the Photo data
-        authorView.text = photo.author
+        authorView.text = photo.photographer
 
         // TODO - Bind the ImageView with the UnsplashPhoto image url
         Glide.with(holder.itemView)
