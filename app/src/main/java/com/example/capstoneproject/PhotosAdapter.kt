@@ -1,6 +1,7 @@
 package com.example.capstoneproject
 
 import android.content.ContentValues
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -30,7 +31,7 @@ import java.net.URL
 import java.util.concurrent.Executors
 
 //class PhotosAdapter(private val mPhotos: List<UnsplashPhoto>): RecyclerView.Adapter<PhotosAdapter.ViewHolder>() {
-class PhotosAdapter(private val mPhotos: List<PhotoData>): RecyclerView.Adapter<PhotosAdapter.ViewHolder>() {
+class PhotosAdapter(private val mPhotos: List<PhotoData>, private val context: Context): RecyclerView.Adapter<PhotosAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView = itemView.findViewById<ImageView>(R.id.imageView)
@@ -96,7 +97,10 @@ class PhotosAdapter(private val mPhotos: List<PhotoData>): RecyclerView.Adapter<
             return BitmapFactory.decodeStream(bufferedInputStream)
         } catch (e: IOException) {
             e.printStackTrace()
-            Toast.makeText(this@PhotosAdapter, "Error", Toast.LENGTH_LONG).show()
+
+            if (context is MainActivity) {
+                Toast.makeText(context, "Error", Toast.LENGTH_LONG).show()
+            }
         }
         return null
     }
@@ -116,8 +120,12 @@ class PhotosAdapter(private val mPhotos: List<PhotoData>): RecyclerView.Adapter<
     private fun mSaveMediaToStorage(bitmap: Bitmap?) {
         val filename = "${System.currentTimeMillis()}.jpg"
         var fos: OutputStream? = null
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            this.contentResolver?.also { resolver ->
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && context is MainActivity) {
+
+            val resolver = context.contentResolver
+
+            context.contentResolver?.also { resolver ->
                 val contentValues = ContentValues().apply {
                     put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
                     put(MediaStore.MediaColumns.MIME_TYPE, "image/jpg")
@@ -133,7 +141,10 @@ class PhotosAdapter(private val mPhotos: List<PhotoData>): RecyclerView.Adapter<
         }
         fos?.use {
             bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, it)
-            Toast.makeText(this , "Saved to Gallery" , Toast.LENGTH_SHORT).show()
+
+            if (context is MainActivity) {
+                Toast.makeText(context, "Image stored successfully 😁", Toast.LENGTH_LONG).show()
+            }
         }
     }
 
