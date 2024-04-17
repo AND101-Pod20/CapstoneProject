@@ -34,8 +34,8 @@ This app will display images, given a prompt, and will fetch images from Unsplas
 - The app uses multiple user actions
 
 **Required Features:**
-- [ ] User can view a list of images based on a search prompt
-- [ ] User can view details of the image, such as author, date the photo taken
+- [x] User can view a list of images based on a search prompt
+- [x] User can view details of the image, such as author, date the photo taken
 - [ ] User can download a particular image to their device
 
 **Stretch Features:**
