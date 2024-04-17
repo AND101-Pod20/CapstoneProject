@@ -38,12 +38,14 @@ class MainActivity : AppCompatActivity() {
         photos = arrayListOf()
 
         setupLayout()
-        getData()
         fetchButton = findViewById(R.id.button)
         fetchButton.setOnClickListener{
             getCustomData(promptTextField.editText?.text.toString())
         }
         setupRecyclerView()
+
+        val rnd = (1..12).shuffled().first()
+        getCustomData("random $rnd")
     }
 
 
@@ -125,6 +127,9 @@ class MainActivity : AppCompatActivity() {
                         jsonObj.getJSONObject("links").getString("html"),
                         jsonObj.getJSONObject("links").getString("download"),
                     )
+
+                    getData()
+
 
                     photos.add(customPhoto)
                     this@MainActivity.adapter.notifyDataSetChanged()
