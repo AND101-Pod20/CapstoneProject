@@ -20,7 +20,7 @@ val URL = "https://api.unsplash.com/photos/?page=1&per_page=50&client_id=qaR1WZE
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var photos: ArrayList<UnsplashPhoto>
+    private var photos: ArrayList<UnsplashPhoto> = arrayListOf()
     private lateinit var photoRV: RecyclerView
     private lateinit var fetchButton: Button
     private lateinit var promptTextField: TextInputLayout
@@ -32,16 +32,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setupLayout()
-        setupRecyclerView()
 
+        setupLayout()
+//        photos =
+        setupRecyclerView()
         getData()
+        fetchButton = findViewById(R.id.button)
+        fetchButton.setOnClickListener{
+            getCustomData(promptTextField.editText?.text.toString())
+
+        }
+
     }
+
+
 
     private fun setupLayout() {
         photoRV = findViewById(R.id.recyclerView)
-        fetchButton = findViewById(R.id.textInputLayout)
-        promptTextField = findViewById(R.id.button)
+        fetchButton = findViewById(R.id.button)
+        promptTextField = findViewById(R.id.textInputLayout)
+
     }
 
     private fun setupRecyclerView() {
@@ -96,6 +106,51 @@ class MainActivity : AppCompatActivity() {
 
 
         }
+
+    private fun getCustomData(text: String) {
+        val client = AsyncHttpClient()
+        client["https://api.unsplash.com/search/photos?page=1&query=${text}&client_id=${apiKey}", object : JsonHttpResponseHandler() {
+            override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
+                val customJson = json.jsonObject.getJSONArray("results")
+
+
+//                Log.d("DOG", "response$customJson")
+                for(i in 0..<customJson.length()-1){
+
+
+                    val jsonObj = customJson.getJSONObject(i)
+                    val customPhoto = PhotoData(
+
+                        jsonObj.getString("id"),
+                        jsonObj.getJSONObject("urls").getString("regular"),
+                        jsonObj.getString("description"),
+                        jsonObj.getJSONObject("user").getString("name"),
+                        jsonObj.getJSONObject("links").getString("html"),
+                        jsonObj.getJSONObject("links").getString("download"),
+                    )
+                    Log.d("DOG", "response successful$customPhoto")
+
+
+//                        photoList.add(photo)
+
+
+                }
+
+
+            }
+
+            override fun onFailure(
+                statusCode: Int,
+                headers: Headers?,
+                errorResponse: String,
+                throwable: Throwable?
+            ) {
+                Log.d("Photos Error", errorResponse)
+            }
+        }]
+
+
+    }
 
 
 }
