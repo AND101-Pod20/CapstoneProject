@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun getData(){
+    private fun getData() {
         val client = AsyncHttpClient()
         val url = "$BASE_URL?page=$currentPage&per_page=30&client_id=$apiKey"
         client.get(url, object : JsonHttpResponseHandler() {
@@ -85,11 +85,12 @@ class MainActivity : AppCompatActivity() {
                     val jsonObj = jsonArray.getJSONObject(i)
                     val photo = PhotoData(
                         jsonObj.getString("id"),
-                        jsonObj.getJSONObject("urls").getString("regular"),
+                        jsonObj.getJSONObject("urls").getString("thumb"),  // Low quality
+                        jsonObj.getJSONObject("urls").getString("regular"), // High quality
                         jsonObj.optString("description") ?: "No Description",
                         jsonObj.getJSONObject("user").getString("name"),
                         jsonObj.getJSONObject("links").getString("html"),
-                        jsonObj.getJSONObject("links").getString("download")
+                        jsonObj.getJSONObject("links").getString("download")  // Ensure this line exists
                     )
                     photos.add(photo)
                 }
@@ -97,13 +98,8 @@ class MainActivity : AppCompatActivity() {
                 loading = false
             }
 
-            override fun onFailure(
-                statusCode: Int,
-                headers: Headers?,
-                errorResponse: String,
-                throwable: Throwable?
-            ) {
-                Log.e("Photos Error", errorResponse)
+            override fun onFailure(statusCode: Int, headers: Headers?, response: String?, throwable: Throwable?) {
+                Log.e("Photos Error", response ?: "Unknown Error")
                 loading = false
             }
         })
@@ -111,7 +107,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getCustomData(text: String) {
         val client = AsyncHttpClient()
-        client["https://api.unsplash.com/search/photos?page=1&query=${text}&client_id=${apiKey}", object : JsonHttpResponseHandler() {
+        client["https://api.unsplash.com/search/photos?page=1&query=$text&client_id=$apiKey", object : JsonHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
                 val customJson = json.jsonObject.getJSONArray("results")
 
@@ -119,34 +115,24 @@ class MainActivity : AppCompatActivity() {
                     photos.clear()
                 }
 
-
-//                Log.d("DOG", "response$customJson")
-                for(i in 0..<customJson.length()-1){
+                for (i in 0 until customJson.length()) {
                     val jsonObj = customJson.getJSONObject(i)
                     val customPhoto = PhotoData(
-
                         jsonObj.getString("id"),
-                        jsonObj.getJSONObject("urls").getString("regular"),
-                        jsonObj.getString("description"),
+                        jsonObj.getJSONObject("urls").getString("thumb"),  // Assuming 'thumb' as low quality
+                        jsonObj.getJSONObject("urls").getString("regular"), // High quality
+                        jsonObj.optString("description") ?: "No Description",
                         jsonObj.getJSONObject("user").getString("name"),
                         jsonObj.getJSONObject("links").getString("html"),
-                        jsonObj.getJSONObject("links").getString("download"),
+                        jsonObj.getJSONObject("links").getString("download")
                     )
-
                     photos.add(customPhoto)
-                    this@MainActivity.adapter.notifyDataSetChanged()
-
-//                    Log.d("DOG", "response successful$customPhoto")
-//                        photoList.add(photo)
                 }
+                adapter.notifyDataSetChanged()
             }
-            override fun onFailure(
-                statusCode: Int,
-                headers: Headers?,
-                errorResponse: String,
-                throwable: Throwable?
-            ) {
-                Log.d("Photos Error", errorResponse)
+
+            override fun onFailure(statusCode: Int, headers: Headers?, response: String?, throwable: Throwable?) {
+                Log.d("Photos Error", response ?: "Unknown Error")
             }
         }]
     }
