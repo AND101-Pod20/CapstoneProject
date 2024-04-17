@@ -20,7 +20,7 @@ val URL = "https://api.unsplash.com/photos/?page=1&per_page=50&client_id=qaR1WZE
 
 class MainActivity : AppCompatActivity() {
 
-    private var photos: ArrayList<UnsplashPhoto> = arrayListOf()
+    private lateinit var photos: ArrayList<UnsplashPhoto>
     private lateinit var photoRV: RecyclerView
     private lateinit var fetchButton: Button
     private lateinit var promptTextField: TextInputLayout
@@ -33,8 +33,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        photos = arrayListOf()
+
         setupLayout()
-//        photos =
         setupRecyclerView()
         getData()
         fetchButton = findViewById(R.id.button)
