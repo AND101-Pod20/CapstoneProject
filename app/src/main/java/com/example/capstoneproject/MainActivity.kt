@@ -26,69 +26,75 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fetchButton: Button
     private lateinit var promptTextField: TextInputLayout
     private lateinit var adapter: PhotosAdapter
-
+    private var loading = true
+    private var currentPage = 1
+    private val visibleThreshold = 5
 
     var photoList = arrayListOf<PhotoData>()
-
+    companion object {
+        private const val BASE_URL = "https://api.unsplash.com/photos/"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         photos = arrayListOf()
-
         setupLayout()
-        getData()
-        fetchButton = findViewById(R.id.button)
-        fetchButton.setOnClickListener{
-            getCustomData(promptTextField.editText?.text.toString())
-        }
         setupRecyclerView()
+        getData()
     }
-
-
 
     private fun setupLayout() {
         photoRV = findViewById(R.id.recyclerView)
         fetchButton = findViewById(R.id.button)
         promptTextField = findViewById(R.id.textInputLayout)
-
+        fetchButton.setOnClickListener{
+            photos.clear()
+            getCustomData(promptTextField.editText?.text.toString())
+        }
     }
 
     private fun setupRecyclerView() {
-        this.adapter = PhotosAdapter(photos)
-//        this.adapter = Pho
-//        this.adapter = PhotosAdapter(photos)
-        photoRV.adapter = this.adapter
-        photoRV.layoutManager = LinearLayoutManager(this@MainActivity)
+        adapter = PhotosAdapter(photos)
+        photoRV.adapter = adapter
+        photoRV.layoutManager = LinearLayoutManager(this)
 
-        // TODO - (opt.) Add divider between RecyclerView items
-//        val dividerItemDecoration = DividerItemDecoration(rvTracks.context, LinearLayoutManager.VERTICAL)
-//        rvTracks.addItemDecoration(dividerItemDecoration)
+        photoRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val totalItemCount = recyclerView.layoutManager!!.itemCount
+                val lastVisibleItem = (recyclerView.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+
+                if (!loading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                    currentPage++
+                    getData()
+                    loading = true
+                }
+            }
+        })
     }
 
 
     private fun getData(){
         val client = AsyncHttpClient()
-        client["https://api.unsplash.com/photos/?page=1&per_page=30&client_id=${apiKey}", object : JsonHttpResponseHandler() {
+        val url = "$BASE_URL?page=$currentPage&per_page=30&client_id=$apiKey"
+        client.get(url, object : JsonHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
                 val jsonArray = json.jsonArray
-                for(i in 0..<jsonArray.length()) {
-
-
+                for (i in 0 until jsonArray.length()) {
                     val jsonObj = jsonArray.getJSONObject(i)
                     val photo = PhotoData(
-
                         jsonObj.getString("id"),
                         jsonObj.getJSONObject("urls").getString("regular"),
-                        jsonObj.getString("description"),
+                        jsonObj.optString("description") ?: "No Description",
                         jsonObj.getJSONObject("user").getString("name"),
                         jsonObj.getJSONObject("links").getString("html"),
-                        jsonObj.getJSONObject("links").getString("download"),
+                        jsonObj.getJSONObject("links").getString("download")
                     )
-                    Log.d("Photos", "response successful$photo")
-//                        photoList.add(photo)
+                    photos.add(photo)
                 }
+                adapter.notifyItemRangeInserted(adapter.itemCount, photos.size - 1)
+                loading = false
             }
 
             override fun onFailure(
@@ -97,9 +103,10 @@ class MainActivity : AppCompatActivity() {
                 errorResponse: String,
                 throwable: Throwable?
             ) {
-                Log.d("Photos Error", errorResponse)
+                Log.e("Photos Error", errorResponse)
+                loading = false
             }
-        }]
+        })
     }
 
     private fun getCustomData(text: String) {
