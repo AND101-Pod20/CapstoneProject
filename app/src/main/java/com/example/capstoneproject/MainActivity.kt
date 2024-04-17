@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        this.adapter = PhotosAdapter(photos)
+        this.adapter = PhotosAdapter(photos, this)
 //        this.adapter = Pho
 //        this.adapter = PhotosAdapter(photos)
         photoRV.adapter = this.adapter
