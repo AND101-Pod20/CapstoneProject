@@ -20,7 +20,8 @@ val URL = "https://api.unsplash.com/photos/?page=1&per_page=50&client_id=qaR1WZE
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var photos: ArrayList<UnsplashPhoto>
+    private lateinit var photos: ArrayList<PhotoData>
+//    private lateinit var photos: ArrayList<UnsplashPhoto>
     private lateinit var photoRV: RecyclerView
     private lateinit var fetchButton: Button
     private lateinit var promptTextField: TextInputLayout
@@ -42,9 +43,7 @@ class MainActivity : AppCompatActivity() {
         fetchButton = findViewById(R.id.button)
         fetchButton.setOnClickListener{
             getCustomData(promptTextField.editText?.text.toString())
-
         }
-
     }
 
 
@@ -58,6 +57,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         this.adapter = PhotosAdapter(photos)
+//        this.adapter = Pho
+//        this.adapter = PhotosAdapter(photos)
         photoRV.adapter = this.adapter
         photoRV.layoutManager = LinearLayoutManager(this@MainActivity)
 
@@ -67,61 +68,16 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-        private fun getData(){
-            val client = AsyncHttpClient()
-            client["https://api.unsplash.com/photos/?page=1&per_page=30&client_id=${apiKey}", object : JsonHttpResponseHandler() {
-                override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
-                    val jsonArray = json.jsonArray
-                    for(i in 0..jsonArray.length()-1){
-
-
-                        val jsonObj = jsonArray.getJSONObject(i)
-                        val photo = PhotoData(
-
-                            jsonObj.getString("id"),
-                            jsonObj.getJSONObject("urls").getString("regular"),
-                            jsonObj.getString("description"),
-                            jsonObj.getJSONObject("user").getString("name"),
-                            jsonObj.getJSONObject("links").getString("html"),
-                            jsonObj.getJSONObject("links").getString("download"),
-                        )
-                        Log.d("Photos", "response successful$photo")
-
-
-//                        photoList.add(photo)
-
-
-                    }
-
-
-                }
-
-                override fun onFailure(
-                    statusCode: Int,
-                    headers: Headers?,
-                    errorResponse: String,
-                    throwable: Throwable?
-                ) {
-                    Log.d("Photos Error", errorResponse)
-                }
-            }]
-
-
-        }
-
-    private fun getCustomData(text: String) {
+    private fun getData(){
         val client = AsyncHttpClient()
-        client["https://api.unsplash.com/search/photos?page=1&query=${text}&client_id=${apiKey}", object : JsonHttpResponseHandler() {
+        client["https://api.unsplash.com/photos/?page=1&per_page=30&client_id=${apiKey}", object : JsonHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
-                val customJson = json.jsonObject.getJSONArray("results")
+                val jsonArray = json.jsonArray
+                for(i in 0..<jsonArray.length()) {
 
 
-//                Log.d("DOG", "response$customJson")
-                for(i in 0..<customJson.length()-1){
-
-
-                    val jsonObj = customJson.getJSONObject(i)
-                    val customPhoto = PhotoData(
+                    val jsonObj = jsonArray.getJSONObject(i)
+                    val photo = PhotoData(
 
                         jsonObj.getString("id"),
                         jsonObj.getJSONObject("urls").getString("regular"),
@@ -130,15 +86,9 @@ class MainActivity : AppCompatActivity() {
                         jsonObj.getJSONObject("links").getString("html"),
                         jsonObj.getJSONObject("links").getString("download"),
                     )
-                    Log.d("DOG", "response successful$customPhoto")
-
-
+                    Log.d("Photos", "response successful$photo")
 //                        photoList.add(photo)
-
-
                 }
-
-
             }
 
             override fun onFailure(
@@ -150,9 +100,43 @@ class MainActivity : AppCompatActivity() {
                 Log.d("Photos Error", errorResponse)
             }
         }]
-
-
     }
 
+    private fun getCustomData(text: String) {
+        val client = AsyncHttpClient()
+        client["https://api.unsplash.com/search/photos?page=1&query=${text}&client_id=${apiKey}", object : JsonHttpResponseHandler() {
+            override fun onSuccess(statusCode: Int, headers: Headers, json: JsonHttpResponseHandler.JSON) {
+                val customJson = json.jsonObject.getJSONArray("results")
 
+
+//                Log.d("DOG", "response$customJson")
+                for(i in 0..<customJson.length()-1){
+                    val jsonObj = customJson.getJSONObject(i)
+                    val customPhoto = PhotoData(
+
+                        jsonObj.getString("id"),
+                        jsonObj.getJSONObject("urls").getString("regular"),
+                        jsonObj.getString("description"),
+                        jsonObj.getJSONObject("user").getString("name"),
+                        jsonObj.getJSONObject("links").getString("html"),
+                        jsonObj.getJSONObject("links").getString("download"),
+                    )
+
+                    photos.add(customPhoto)
+
+
+//                    Log.d("DOG", "response successful$customPhoto")
+//                        photoList.add(photo)
+                }
+            }
+            override fun onFailure(
+                statusCode: Int,
+                headers: Headers?,
+                errorResponse: String,
+                throwable: Throwable?
+            ) {
+                Log.d("Photos Error", errorResponse)
+            }
+        }]
+    }
 }
