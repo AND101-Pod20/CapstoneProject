@@ -40,8 +40,15 @@ class MainActivity : AppCompatActivity() {
 
         photos = arrayListOf()
         setupLayout()
+
+        fetchButton = findViewById(R.id.button)
+        fetchButton.setOnClickListener{
+            getCustomData(promptTextField.editText?.text.toString())
+        }
         setupRecyclerView()
-        getData()
+
+        val rnd = (1..12).shuffled().first()
+        getCustomData("random $rnd")
     }
 
     private fun setupLayout() {
@@ -55,10 +62,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        adapter = PhotosAdapter(photos)
-        photoRV.adapter = adapter
-        photoRV.layoutManager = LinearLayoutManager(this)
-
+        this.adapter = PhotosAdapter(photos, this)
+        photoRV.adapter = this.adapter
+        photoRV.layoutManager = LinearLayoutManager(this@MainActivity)
+        
         photoRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
