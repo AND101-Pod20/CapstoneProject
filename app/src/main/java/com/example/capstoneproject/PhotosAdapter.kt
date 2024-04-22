@@ -34,8 +34,9 @@ import java.util.concurrent.Executors
 class PhotosAdapter(private val mPhotos: List<PhotoData>, private val context: Context): RecyclerView.Adapter<PhotosAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.imageView)
-        val authorTextView: TextView = itemView.findViewById(R.id.textView)
+        val imageView = itemView.findViewById<ImageView>(R.id.imageView)
+        val authorView = itemView.findViewById<TextView>(R.id.textView)
+        var fetchButton = itemView.findViewById<Button>(R.id.button2)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,7 +46,10 @@ class PhotosAdapter(private val mPhotos: List<PhotoData>, private val context: C
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val photo = mPhotos[position]
+        val photo: PhotoData = mPhotos[position]
+        val imageView = holder.imageView
+        val authorView = holder.authorView
+        val fetchButton = holder.fetchButton
 
         // Load low-quality image first
         Glide.with(holder.itemView.context)
@@ -57,7 +61,7 @@ class PhotosAdapter(private val mPhotos: List<PhotoData>, private val context: C
             .load(photo.highQualityURL)
             .into(holder.imageView)
 
-        holder.authorTextView.text = photo.photographer
+        authorView.text = photo.photographer
 
         var mImage: Bitmap?
         val downloadUrl = photo.downloadLink
@@ -113,8 +117,6 @@ class PhotosAdapter(private val mPhotos: List<PhotoData>, private val context: C
         var fos: OutputStream? = null
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && context is MainActivity) {
-
-            val resolver = context.contentResolver
 
             context.contentResolver?.also { resolver ->
                 val contentValues = ContentValues().apply {

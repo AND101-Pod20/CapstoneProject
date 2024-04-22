@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         this.adapter = PhotosAdapter(photos, this)
         photoRV.adapter = this.adapter
-        photoRV.layoutManager = LinearLayoutManager(this@MainActivity)
+        photoRV.layoutManager = LinearLayoutManager(this)
         
         photoRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -135,11 +135,14 @@ class MainActivity : AppCompatActivity() {
                     )
                     photos.add(customPhoto)
                 }
+                adapter.notifyItemRangeInserted(adapter.itemCount, photos.size - 1)
+                loading = false
                 adapter.notifyDataSetChanged()
             }
 
             override fun onFailure(statusCode: Int, headers: Headers?, response: String?, throwable: Throwable?) {
                 Log.d("Photos Error", response ?: "Unknown Error")
+                loading = false
             }
         }]
     }
