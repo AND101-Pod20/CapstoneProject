@@ -39,7 +39,7 @@ This app will display images, given a prompt, and will fetch images from Unsplas
 - [x] User can download a particular image to their device
 
 **Stretch Features:**
-- [ ] User can infinitely scroll through the list, which fetches more photos
+- [x] User can infinitely scroll through the list, which fetches more photos
 - [ ] User can be redirected to the Unsplash website for a particular image
 - [ ] User can switch between light and dark mode, based on the device's default setting
 
