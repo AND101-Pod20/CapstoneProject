@@ -42,9 +42,14 @@ The following EXTRA features are implemented:
 
 Here's a video that demos all of the app's implemented features:
 
-
-
-<iframe width="640" height="360" src="https://www.loom.com/embed/5a7579ed2b3a47c49e28218c4eafba2c?sid=81d480a2-b27a-409f-9722-19b9cc725025" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+<div>
+    <a href="https://www.loom.com/share/5a7579ed2b3a47c49e28218c4eafba2c">
+      <p>Unsplash Client App Demo - Watch Video</p>
+    </a>
+    <a href="https://www.loom.com/share/5a7579ed2b3a47c49e28218c4eafba2c">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/5a7579ed2b3a47c49e28218c4eafba2c-with-play.gif">
+    </a>
+  </div>
 
 VIDEO created with **Loom**
 
