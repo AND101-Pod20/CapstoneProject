@@ -73,16 +73,20 @@ Unsplash API - [[Documentation Link](https://unsplash.com/documentation#get-a-ph
 <!-- Add picture of your hand sketched wireframes in this section -->
 <img src="https://i.imgur.com/bZSVegx.png" width=600 alt="lo-fi sketch of app">
 
-### [BONUS] Digital Wireframes & Mockups
-
-### [BONUS] Interactive Prototype
-
 ## Build Notes
 
 Here's a place for any other notes on the app, it's creation
 process, or what you learned this unit!
 
 For Milestone 2, include **2+ Videos/GIFs** of the build process here!
+
+#### Main Functionality
+<img src="https://i.imgur.com/xyaJoj3.gif" width=300 alt="lo-fi sketch of app">
+
+#### Downloading Image to Device
+<img src="https://i.imgur.com/IRJTjNA.gif" width=300 alt="lo-fi sketch of app">
+
+
 
 ## License
 
