@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     var photoList = arrayListOf<PhotoData>()
     companion object {
         private const val BASE_URL = "https://api.unsplash.com/photos/"
+        var isDarkMode = false
+
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         setAppTheme();
@@ -57,9 +59,6 @@ class MainActivity : AppCompatActivity() {
 
         val rnd = (1..12).shuffled().first()
         getCustomData("random $rnd")
-    }
-    companion object {
-        var isDarkMode = false
     }
 
     private fun setAppTheme() {
