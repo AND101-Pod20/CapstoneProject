@@ -1,5 +1,64 @@
 <!-- (This is a comment) INSTRUCTIONS: Go through this page and fill out any **bolded** entries with their correct values.-->
 
+# AND101 Milestone 2 - **Unsplash Client by Pod20BestPod**
+
+Submitted by:
+- Marthen Nodado
+- Aditya Boghara
+- Brian Zhang
+- Victor Teluwo
+
+Time spent: **10** hours spent in total
+
+## Summary
+
+This document provides a summary of our project building process for our app, **App Name Here**
+
+## Milestone Requirements
+
+<!-- Please be sure to change the [ ] to [x] for any features you completed.  If a feature is not checked [x], you might miss the points for that item! -->
+
+The following REQUIRED features are completed:
+
+- [x] Assign features to each member of your group
+- [x] Establish a goal time for completing each feature
+
+The following REQUIRED files are included:
+
+- [x] Updated 📄 `project_spec.md`, which contains:
+  - [X] App Overview (Milestone 1)
+  - [X] App Spec (Milestone 1)
+  - [x] Checked off 2+ completed features
+  - [x] 2+ Videos/GIFs of build progress
+
+- [x] Our 🎥 Demo Video
+  - [x] We have also added the Demo Video Link to the Group Info Form on the course portal.
+
+The following EXTRA features are implemented:
+
+- [ ] List anything else that you added to improve your submission!
+
+## 🎥 Demo Video
+
+Here's a video that demos all of the app's implemented features:
+
+<div>
+    <a href="https://www.loom.com/share/5a7579ed2b3a47c49e28218c4eafba2c">
+      <p>Unsplash Client App Demo - Watch Video</p>
+    </a>
+    <a href="https://www.loom.com/share/5a7579ed2b3a47c49e28218c4eafba2c">
+      <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/5a7579ed2b3a47c49e28218c4eafba2c-with-play.gif">
+    </a>
+  </div>
+
+VIDEO created with **Loom**
+
+
+## Notes
+
+Here's a place for any other notes on this milestone!
+
+
 # AND101 Milestone 1 - **Unsplash Client by Pod20BestPod**
 
 Submitted by:
@@ -28,13 +87,13 @@ The following REQUIRED features are completed:
 The following REQUIRED files are included:
 
 - [x] Included 📄 `brainstorming.md`, which contains:
-    - [x] Our initial brainstorming ideas (6+ ideas)
-    - [x] 5-category evaluation of our top 3 ideas
-    - [x] Final app idea chosen
+  - [x] Our initial brainstorming ideas (6+ ideas)
+  - [x] 5-category evaluation of our top 3 ideas
+  - [x] Final app idea chosen
 - [x] Included 📄 `project_spec.md`, which contains:
-    - [x] App Overview: Description and evaluation
-    - [x] App Spec: User features, Chosen API(s), User Interactions
-    - [x] Wireframe image(s)
+  - [x] App Overview: Description and evaluation
+  - [x] App Spec: User features, Chosen API(s), User Interactions
+  - [x] Wireframe image(s)
 
 The following BONUS features are implemented:
 

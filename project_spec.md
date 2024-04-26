@@ -36,10 +36,10 @@ This app will display images, given a prompt, and will fetch images from Unsplas
 **Required Features:**
 - [x] User can view a list of images based on a search prompt
 - [x] User can view details of the image, such as author, date the photo taken
-- [ ] User can download a particular image to their device
+- [x] User can download a particular image to their device
 
 **Stretch Features:**
-- [ ] User can infinitely scroll through the list, which fetches more photos
+- [x] User can infinitely scroll through the list, which fetches more photos
 - [ ] User can be redirected to the Unsplash website for a particular image
 - [ ] User can switch between light and dark mode, based on the device's default setting
 
@@ -73,16 +73,20 @@ Unsplash API - [[Documentation Link](https://unsplash.com/documentation#get-a-ph
 <!-- Add picture of your hand sketched wireframes in this section -->
 <img src="https://i.imgur.com/bZSVegx.png" width=600 alt="lo-fi sketch of app">
 
-### [BONUS] Digital Wireframes & Mockups
-
-### [BONUS] Interactive Prototype
-
 ## Build Notes
 
 Here's a place for any other notes on the app, it's creation
 process, or what you learned this unit!
 
 For Milestone 2, include **2+ Videos/GIFs** of the build process here!
+
+#### Main Functionality
+<img src="https://i.imgur.com/xyaJoj3.gif" width=300 alt="lo-fi sketch of app">
+
+#### Downloading Image to Device
+<img src="https://i.imgur.com/IRJTjNA.gif" width=300 alt="lo-fi sketch of app">
+
+
 
 ## License
 
