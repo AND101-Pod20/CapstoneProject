@@ -6,4 +6,23 @@
     </style>
 
     <style name="Theme.CapstoneProject" parent="Base.Theme.CapstoneProject" />
+
+    <style name="AppTheme_Light">
+        <!-- Attributes specific to the light theme -->
+<!--        <item name="android:textColor">@color/text_light</item>-->
+        <!-- Other light theme attributes -->
+
+        <item name="android:windowBackground">@color/lightBackground</item>
+        <item name="android:textColor">@color/lightTextColor</item>
+
+    </style>
+
+    <style name="AppTheme_Dark">
+        <!-- Attributes specific to the dark theme -->
+<!--        <item name="android:textColor">@color/text_dark</item>-->
+        <!-- Other dark theme attributes -->
+        <item name="android:windowBackground">@color/darkBackground</item>
+        <item name="android:textColor">@color/darkTextColor</item>
+
+    </style>
 </resources>

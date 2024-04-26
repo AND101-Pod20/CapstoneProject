@@ -3,14 +3,14 @@ package com.example.capstoneproject
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
-import android.provider.ContactsContract.Contacts.Photo
 import android.util.Log
+import androidx.core.content.ContextCompat
 import com.codepath.asynchttpclient.AsyncHttpClient
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
+import com.google.android.material.textfield.TextInputEditText
 import okhttp3.Headers
 
 
@@ -33,8 +33,11 @@ class MainActivity : AppCompatActivity() {
     var photoList = arrayListOf<PhotoData>()
     companion object {
         private const val BASE_URL = "https://api.unsplash.com/photos/"
+        var isDarkMode = false
+
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+        setAppTheme();
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -45,11 +48,29 @@ class MainActivity : AppCompatActivity() {
         fetchButton.setOnClickListener{
             getCustomData(promptTextField.editText?.text.toString())
         }
+
+
+        val themeButton: Button = findViewById(R.id.button3)
+        themeButton.setOnClickListener {
+            toggleTheme()
+        }
+
         setupRecyclerView()
 
         val rnd = (1..12).shuffled().first()
         getCustomData("random $rnd")
     }
+
+    private fun setAppTheme() {
+        setTheme(if (isDarkMode) R.style.AppTheme_Dark else R.style.AppTheme_Light)
+//        val textView: TextInputEditText = findViewById(R.id.input1)
+//        textView.setTextColor(ContextCompat.getColor(this, if (isDarkMode) R.color.darkTextColor else R.color.lightTextColor))
+    }
+    private fun toggleTheme() {
+        isDarkMode = !isDarkMode
+        recreate() // Recreate the activity to apply the new theme
+    }
+
 
     private fun setupLayout() {
         photoRV = findViewById(R.id.recyclerView)
